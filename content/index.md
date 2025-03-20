@@ -88,7 +88,9 @@ $$
 
 ### 图片链接
 
-![示例图片](https://raw.githubusercontent.com/jackyzha0/quartz/hugo/content/notes/images/hugo-logo-wide.svg)
+![动态SVG演示](demo.svg)
+
+这是一个使用SVG制作的简单动画，展示了一个旋转的彩色方块。
 
 ## 交叉引用
 
