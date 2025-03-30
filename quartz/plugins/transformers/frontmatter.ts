@@ -77,14 +77,6 @@ export const FrontMatter: QuartzTransformerPlugin<Partial<Options>> = (userOpts)
               data.title = file.stem ?? i18n(cfg.configuration.locale).propertyDefaults.title
             }
 
-            // 添加对 slug 的处理，只替换文件名部分，保留目录结构
-            if (data.slug != null && data.slug.toString() !== "") {
-              const originalSlug = file.data.slug as string
-              const dirPath = originalSlug.split('/').slice(0, -1).join('/')
-              const newSlug = dirPath ? `${dirPath}/${data.slug.toString()}` : data.slug.toString()
-              file.data.slug = newSlug as FullSlug
-            }
-
             const tags = coerceToArray(coalesceAliases(data, ["tags", "tag"]))
             if (tags) data.tags = [...new Set(tags.map((tag: string) => slugTag(tag)))]
 
@@ -95,14 +87,12 @@ export const FrontMatter: QuartzTransformerPlugin<Partial<Options>> = (userOpts)
               allSlugs.push(...file.data.aliases)
             }
 
-            // permalink 优先级高于 slug
             if (data.permalink != null && data.permalink.toString() !== "") {
               data.permalink = data.permalink.toString() as FullSlug
               const aliases = file.data.aliases ?? []
               aliases.push(data.permalink)
               file.data.aliases = aliases
               allSlugs.push(data.permalink)
-              file.data.slug = data.permalink
             }
 
             const cssclasses = coerceToArray(coalesceAliases(data, ["cssclasses", "cssclass"]))
